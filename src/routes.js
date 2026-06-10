@@ -1,3 +1,4 @@
+import { buildRoutePath } from "./utils/build-route-path.js";
 import { TaskController } from "./controllers/task-controller.js";
 
 const taskController = new TaskController();
@@ -5,12 +6,12 @@ const taskController = new TaskController();
 export const routes = [
   {
     method: "GET",
-    path: "/tasks",
+    path: buildRoutePath("/tasks"),
     handler: taskController.getAll,
   },
   {
     method: "POST",
-    path: "/tasks",
+    path: buildRoutePath("/tasks"),
     handler: taskController.create,
   },
 ];
