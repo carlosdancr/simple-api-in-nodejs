@@ -4,7 +4,9 @@ const taskModel = new TaskModel();
 
 export class TaskController {
   getAll(req, res) {
-    const tasks = taskModel.findAll();
+    const { searchTerm } = req.query;
+
+    const tasks = taskModel.findAll(searchTerm);
 
     return res.writeHead(200).end(JSON.stringify(tasks));
   }

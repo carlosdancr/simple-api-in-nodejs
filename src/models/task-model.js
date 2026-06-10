@@ -5,8 +5,11 @@ import { Database } from "../database.js";
 const database = new Database();
 
 export class TaskModel {
-  findAll() {
-    const tasks = database.select("tasks");
+  findAll(searchTerm) {
+    const tasks = database.select(
+      "tasks",
+      searchTerm ? { title: searchTerm, description: searchTerm } : null,
+    );
 
     return tasks;
   }
