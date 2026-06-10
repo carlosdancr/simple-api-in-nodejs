@@ -3,6 +3,12 @@ import { TaskModel } from "../models/task-model.js";
 const taskModel = new TaskModel();
 
 export class TaskController {
+  getAll(req, res) {
+    const tasks = taskModel.findAll();
+
+    return res.writeHead(200).end(JSON.stringify(tasks));
+  }
+
   create(req, res) {
     const { title, description } = req.body;
 

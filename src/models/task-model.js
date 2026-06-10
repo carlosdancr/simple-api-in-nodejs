@@ -5,6 +5,12 @@ import { Database } from "../database.js";
 const database = new Database();
 
 export class TaskModel {
+  findAll() {
+    const tasks = database.select("tasks");
+
+    return tasks;
+  }
+
   create(data) {
     const { title, description } = data;
 
