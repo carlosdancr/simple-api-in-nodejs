@@ -8,7 +8,7 @@ export class TaskModel {
   create(data) {
     const { title, description } = data;
 
-    const newTask = {
+    const task = {
       id: randomUUID(),
       title,
       description,
@@ -17,6 +17,8 @@ export class TaskModel {
       updated_at: new Date().toISOString(),
     };
 
-    database.insert("tasks", newTask);
+    database.insert("tasks", task);
+
+    return task;
   }
 }

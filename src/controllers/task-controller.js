@@ -4,8 +4,26 @@ const taskModel = new TaskModel();
 
 export class TaskController {
   create(req, res) {
-    taskModel.create(req.body);
+    const { title, description } = req.body;
 
-    res.writeHead(201).end();
+    if (!title) {
+      return res.writeHead(400).end(
+        JSON.stringify({
+          error: "O campo 'title' é obrigatório.",
+        }),
+      );
+    }
+
+    if (!description) {
+      return res.writeHead(400).end(
+        JSON.stringify({
+          error: "O campo 'description' é obrigatório.",
+        }),
+      );
+    }
+
+    const task = taskModel.create({ title, description });
+
+    return res.writeHead(201).end(JSON.stringify(task));
   }
 }
