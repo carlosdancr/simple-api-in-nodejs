@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 
 const databasePath = new URL("../db.json", import.meta.url);
 
-export class Database {
+class Database {
   #database = {};
 
   constructor() {
@@ -19,12 +19,12 @@ export class Database {
     fs.writeFile(databasePath, JSON.stringify(this.#database));
   }
 
-  select(table, filter) {
+  select(table, filters) {
     let data = this.#database[table] ?? [];
 
-    if (filter) {
+    if (Object.keys(filters).length > 0) {
       data = data.filter((row) => {
-        return Object.entries(filter).some(([key, value]) => {
+        return Object.entries(filters).some(([key, value]) => {
           return row[key].toLowerCase().includes(value.toLowerCase());
         });
       });
@@ -61,3 +61,5 @@ export class Database {
     }
   }
 }
+
+export const database = new Database();

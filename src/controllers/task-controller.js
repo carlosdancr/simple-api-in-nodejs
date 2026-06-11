@@ -1,79 +1,71 @@
-import { TaskModel } from "../models/task-model.js";
-import { validateTaskBody } from "../utils/validate-task-body.js";
+import { taskService } from "../services/task-service.js";
 
-const taskModel = new TaskModel();
-
-export class TaskController {
+class TaskController {
   findAll(req, res) {
     const { searchTerm } = req.query;
 
-    const tasks = taskModel.findAll(searchTerm);
+    const tasks = taskService.findAll(searchTerm);
 
     return res.writeHead(200).end(JSON.stringify(tasks));
   }
 
   create(req, res) {
-    if (!validateTaskBody(req, res)) {
-      return;
+    try {
+      const newTask = taskService.create(req.body);
+
+      return res.writeHead(201).end(JSON.stringify(newTask));
+    } catch (err) {
+      return res.writeHead(400).end(
+        JSON.stringify({
+          error: err.message,
+        }),
+      );
     }
-
-    const { title, description } = req.body;
-
-    const newTask = taskModel.create({ title, description });
-
-    return res.writeHead(201).end(JSON.stringify(newTask));
   }
 
   update(req, res) {
-    if (!validateTaskBody(req, res)) {
-      return;
+    try {
+      const updatedTask = taskService.update(req.params.id, req.body);
+
+      return res.writeHead(200).end(JSON.stringify(updatedTask));
+    } catch (err) {
+      return res
+        .writeHead(err.message === "Tarefa não encontrada." ? 404 : 400)
+        .end(
+          JSON.stringify({
+            error: err.message,
+          }),
+        );
     }
-
-    const { id } = req.params;
-    const { title, description } = req.body;
-
-    const updatedTask = taskModel.update(id, { title, description });
-
-    if (!updatedTask) {
-      return res.writeHead(404).end(
-        JSON.stringify({
-          error: "Tarefa não encontrada.",
-        }),
-      );
-    }
-
-    return res.writeHead(200).end(JSON.stringify(updatedTask));
   }
 
   complete(req, res) {
-    const { id } = req.params;
+    try {
+      const completedTask = taskService.complete(req.params.id);
 
-    const completedTask = taskModel.complete(id);
-
-    if (!completedTask) {
+      return res.writeHead(200).end(JSON.stringify(completedTask));
+    } catch (err) {
       return res.writeHead(404).end(
         JSON.stringify({
-          error: "Tarefa não encontrada.",
+          error: err.message,
         }),
       );
     }
-
-    return res.writeHead(200).end(JSON.stringify(completedTask));
   }
 
   delete(req, res) {
-    const { id } = req.params;
+    try {
+      const deletedTask = taskService.delete(req.params.id);
 
-    const deletedTask = taskModel.delete(id);
-
-    if (!deletedTask) {
+      return res.writeHead(200).end(JSON.stringify(deletedTask));
+    } catch (err) {
       return res.writeHead(404).end(
         JSON.stringify({
-          error: "Tarefa não encontrada.",
+          error: err.message,
         }),
       );
     }
-
-    return res.writeHead(200).end(JSON.stringify({ id: deletedTask.id }));
   }
 }
+
+export const taskController = new TaskController();
