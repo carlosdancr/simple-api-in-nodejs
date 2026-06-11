@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 
 import { taskRepository } from "../repositories/task-repository.js";
 import { validateTaskBody } from "../utils/validate-task-body.js";
+import { NotFoundError } from "../errors.js";
 
 class TaskService {
   findAll(searchTerm) {
@@ -37,7 +38,7 @@ class TaskService {
     const existingTask = taskRepository.findById(id);
 
     if (!existingTask) {
-      throw new Error("Tarefa não encontrada.");
+      throw new NotFoundError({ message: "Tarefa não encontrada." });
     }
 
     const updatedTask = {
@@ -56,7 +57,7 @@ class TaskService {
     const existingTask = taskRepository.findById(id);
 
     if (!existingTask) {
-      throw new Error("Tarefa não encontrada.");
+      throw new NotFoundError({ message: "Tarefa não encontrada." });
     }
 
     const updatedTask = {
@@ -75,7 +76,7 @@ class TaskService {
     const existingTask = taskRepository.findById(id);
 
     if (!existingTask) {
-      throw new Error("Tarefa não encontrada.");
+      throw new NotFoundError({ message: "Tarefa não encontrada." });
     }
 
     taskRepository.delete(id);

@@ -19,7 +19,7 @@ class Database {
     fs.writeFile(databasePath, JSON.stringify(this.#database));
   }
 
-  select(table, filters) {
+  select(table, filters = {}) {
     let data = this.#database[table] ?? [];
 
     if (Object.keys(filters).length > 0) {

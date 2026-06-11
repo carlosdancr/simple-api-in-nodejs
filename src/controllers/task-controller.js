@@ -15,11 +15,7 @@ class TaskController {
 
       return res.writeHead(201).end(JSON.stringify(newTask));
     } catch (err) {
-      return res.writeHead(400).end(
-        JSON.stringify({
-          error: err.message,
-        }),
-      );
+      return res.writeHead(err.statusCode).end(JSON.stringify(err));
     }
   }
 
@@ -29,13 +25,7 @@ class TaskController {
 
       return res.writeHead(200).end(JSON.stringify(updatedTask));
     } catch (err) {
-      return res
-        .writeHead(err.message === "Tarefa não encontrada." ? 404 : 400)
-        .end(
-          JSON.stringify({
-            error: err.message,
-          }),
-        );
+      return res.writeHead(err.statusCode).end(JSON.stringify(err));
     }
   }
 
@@ -45,11 +35,9 @@ class TaskController {
 
       return res.writeHead(200).end(JSON.stringify(completedTask));
     } catch (err) {
-      return res.writeHead(404).end(
-        JSON.stringify({
-          error: err.message,
-        }),
-      );
+      console.log(err);
+
+      return res.writeHead(err.statusCode).end(JSON.stringify(err));
     }
   }
 
@@ -59,11 +47,7 @@ class TaskController {
 
       return res.writeHead(200).end(JSON.stringify(deletedTask));
     } catch (err) {
-      return res.writeHead(404).end(
-        JSON.stringify({
-          error: err.message,
-        }),
-      );
+      return res.writeHead(err.statusCode).end(JSON.stringify(err));
     }
   }
 }
