@@ -11,6 +11,14 @@ export function validateTaskBody(req, res) {
     return false;
   }
 
+  if (typeof title !== "string") {
+    return res.writeHead(400).end(
+      JSON.stringify({
+        error: "O campo 'title' deve ser uma string.",
+      }),
+    );
+  }
+
   if (!description) {
     res.writeHead(400).end(
       JSON.stringify({
@@ -19,6 +27,14 @@ export function validateTaskBody(req, res) {
     );
 
     return false;
+  }
+
+  if (typeof description !== "string") {
+    return res.writeHead(400).end(
+      JSON.stringify({
+        error: "O campo 'description' deve ser uma string.",
+      }),
+    );
   }
 
   return true;
