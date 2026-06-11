@@ -58,6 +58,25 @@ export class TaskModel {
     return updatedTask;
   }
 
+  complete(id) {
+    const existingTask = this.findById(id);
+
+    if (!existingTask) {
+      return null;
+    }
+
+    const updatedTask = {
+      ...existingTask,
+      completed_at:
+        existingTask.completed_at === null ? new Date().toISOString() : null,
+      updated_at: new Date().toISOString(),
+    };
+
+    database.update("tasks", id, updatedTask);
+
+    return updatedTask;
+  }
+
   delete(id) {
     const existingTask = this.findById(id);
 

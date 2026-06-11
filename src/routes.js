@@ -20,6 +20,11 @@ export const routes = [
     handler: taskController.update,
   },
   {
+    method: "PATCH",
+    path: buildRoutePath("/tasks/:id/complete"),
+    handler: taskController.complete,
+  },
+  {
     method: "DELETE",
     path: buildRoutePath("/tasks/:id"),
     handler: taskController.delete,

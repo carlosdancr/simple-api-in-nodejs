@@ -45,6 +45,22 @@ export class TaskController {
     return res.writeHead(200).end(JSON.stringify(updatedTask));
   }
 
+  complete(req, res) {
+    const { id } = req.params;
+
+    const completedTask = taskModel.complete(id);
+
+    if (!completedTask) {
+      return res.writeHead(404).end(
+        JSON.stringify({
+          error: "Tarefa não encontrada.",
+        }),
+      );
+    }
+
+    return res.writeHead(200).end(JSON.stringify(completedTask));
+  }
+
   delete(req, res) {
     const { id } = req.params;
 
@@ -58,6 +74,6 @@ export class TaskController {
       );
     }
 
-    return res.writeHead(204).end();
+    return res.writeHead(200).end(JSON.stringify({ id: deletedTask.id }));
   }
 }
