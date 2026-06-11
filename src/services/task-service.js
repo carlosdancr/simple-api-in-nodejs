@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 
+import { NotFoundError } from "../errors/index.js";
 import { taskRepository } from "../repositories/task-repository.js";
 import { validateTaskBody } from "../utils/validate-task-body.js";
-import { NotFoundError } from "../errors.js";
 
 class TaskService {
   findAll(searchTerm) {

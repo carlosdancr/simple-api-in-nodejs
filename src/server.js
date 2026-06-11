@@ -1,8 +1,9 @@
 import http from "node:http";
 
 import { json } from "./middlewares/json.js";
-import { routes } from "./routes.js";
+import { withErrorHandler } from "./middlewares/with-error-handler.js";
 import { extractQueryParams } from "./utils/extract-query-params.js";
+import { routes } from "./routes.js";
 
 const server = http.createServer(async (req, res) => {
   const { method, url } = req;
@@ -21,7 +22,7 @@ const server = http.createServer(async (req, res) => {
     req.params = params;
     req.query = query ? extractQueryParams(query) : {};
 
-    return route.handler(req, res);
+    return withErrorHandler(route.handler)(req, res);
   }
 
   return res.writeHead(404).end();

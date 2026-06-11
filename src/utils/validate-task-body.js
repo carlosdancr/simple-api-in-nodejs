@@ -1,4 +1,4 @@
-import { ValidationError } from "../errors.js";
+import { ValidationError } from "../errors/index.js";
 
 export function validateTaskBody({ title, description }) {
   if (!title) {
