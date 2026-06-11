@@ -14,10 +14,16 @@ export class TaskModel {
     return tasks;
   }
 
+  findById(id) {
+    const task = database.select("tasks").find((task) => task.id === id);
+
+    return task;
+  }
+
   create(data) {
     const { title, description } = data;
 
-    const task = {
+    const newTask = {
       id: randomUUID(),
       title,
       description,
@@ -26,8 +32,29 @@ export class TaskModel {
       updated_at: new Date().toISOString(),
     };
 
-    database.insert("tasks", task);
+    database.insert("tasks", newTask);
 
-    return task;
+    return newTask;
+  }
+
+  update(id, data) {
+    const existingTask = this.findById(id);
+
+    if (!existingTask) {
+      return null;
+    }
+
+    const { title, description } = data;
+
+    const updatedTask = {
+      ...existingTask,
+      title,
+      description,
+      updated_at: new Date().toISOString(),
+    };
+
+    database.update("tasks", id, updatedTask);
+
+    return updatedTask;
   }
 }

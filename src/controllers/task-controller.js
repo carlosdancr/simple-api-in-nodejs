@@ -1,4 +1,5 @@
 import { TaskModel } from "../models/task-model.js";
+import { validateTaskBody } from "../utils/validate-task-body.js";
 
 const taskModel = new TaskModel();
 
@@ -12,26 +13,35 @@ export class TaskController {
   }
 
   create(req, res) {
+    if (!validateTaskBody(req, res)) {
+      return;
+    }
+
     const { title, description } = req.body;
 
-    if (!title) {
-      return res.writeHead(400).end(
+    const newTask = taskModel.create({ title, description });
+
+    return res.writeHead(201).end(JSON.stringify(newTask));
+  }
+
+  update(req, res) {
+    if (!validateTaskBody(req, res)) {
+      return;
+    }
+
+    const { id } = req.params;
+    const { title, description } = req.body;
+
+    const updatedTask = taskModel.update(id, { title, description });
+
+    if (!updatedTask) {
+      return res.writeHead(404).end(
         JSON.stringify({
-          error: "O campo 'title' é obrigatório.",
+          error: "Tarefa não encontrada.",
         }),
       );
     }
 
-    if (!description) {
-      return res.writeHead(400).end(
-        JSON.stringify({
-          error: "O campo 'description' é obrigatório.",
-        }),
-      );
-    }
-
-    const task = taskModel.create({ title, description });
-
-    return res.writeHead(201).end(JSON.stringify(task));
+    return res.writeHead(200).end(JSON.stringify(updatedTask));
   }
 }
