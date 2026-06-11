@@ -4,7 +4,7 @@ import { validateTaskBody } from "../utils/validate-task-body.js";
 const taskModel = new TaskModel();
 
 export class TaskController {
-  getAll(req, res) {
+  findAll(req, res) {
     const { searchTerm } = req.query;
 
     const tasks = taskModel.findAll(searchTerm);
@@ -43,5 +43,21 @@ export class TaskController {
     }
 
     return res.writeHead(200).end(JSON.stringify(updatedTask));
+  }
+
+  delete(req, res) {
+    const { id } = req.params;
+
+    const deletedTask = taskModel.delete(id);
+
+    if (!deletedTask) {
+      return res.writeHead(404).end(
+        JSON.stringify({
+          error: "Tarefa não encontrada.",
+        }),
+      );
+    }
+
+    return res.writeHead(204).end();
   }
 }

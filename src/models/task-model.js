@@ -57,4 +57,16 @@ export class TaskModel {
 
     return updatedTask;
   }
+
+  delete(id) {
+    const existingTask = this.findById(id);
+
+    if (!existingTask) {
+      return null;
+    }
+
+    database.delete("tasks", id);
+
+    return existingTask;
+  }
 }

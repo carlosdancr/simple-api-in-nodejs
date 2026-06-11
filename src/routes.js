@@ -7,7 +7,7 @@ export const routes = [
   {
     method: "GET",
     path: buildRoutePath("/tasks"),
-    handler: taskController.getAll,
+    handler: taskController.findAll,
   },
   {
     method: "POST",
@@ -18,5 +18,10 @@ export const routes = [
     method: "PUT",
     path: buildRoutePath("/tasks/:id"),
     handler: taskController.update,
+  },
+  {
+    method: "DELETE",
+    path: buildRoutePath("/tasks/:id"),
+    handler: taskController.delete,
   },
 ];
