@@ -467,7 +467,3 @@ curl -X PATCH http://localhost:3333/tasks/ID_DA_TAREFA/complete
 ```bash
 curl -X DELETE http://localhost:3333/tasks/ID_DA_TAREFA
 ```
-
-## Licença
-
-Este projeto está licenciado sob a licença ISC.
