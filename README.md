@@ -2,7 +2,7 @@
 
 ## Descrição
 
-O **Simple API in Node.js** é uma API REST simples para gerenciamento de tarefas, construída com Node.js puro, sem frameworks HTTP externos. O projeto demonstra conceitos fundamentais de APIs, como roteamento, leitura de corpo JSON, parâmetros de rota, query params, tratamento de erros, separação em camadas e persistência local em arquivo JSON.
+API REST simples para gerenciamento de tarefas, construída com Node.js puro, sem frameworks HTTP externos. O projeto demonstra conceitos fundamentais de APIs, como roteamento, leitura de corpo JSON, parâmetros de rota, query params, tratamento de erros, separação em camadas e persistência local em arquivo JSON.
 
 Esta aplicação é indicada para estudos de fundamentos de Node.js, prática de criação de APIs REST e entendimento de uma arquitetura simples organizada em controller, service, repository e database.
 
